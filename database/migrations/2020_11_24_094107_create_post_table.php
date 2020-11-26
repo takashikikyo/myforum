@@ -44,7 +44,13 @@ class CreatePostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::connection('public')->drop('medias');
+        DB::connection('public')->statement("
+            DROP TRIGGER update_trigger ON medias;
+        ");
+        DB::connection('public')->statement("
+            DROP FUNCTION set_update_time();
+        ");
     }
 }
 
